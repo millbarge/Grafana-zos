@@ -25,7 +25,7 @@ func TestMiddlewareBasicAuth(t *testing.T) {
 
 	middlewareScenario(t, "Valid API key", func(t *testing.T, sc *scenarioContext) {
 		const orgID int64 = 2
-		keyhash, err := util.EncodePassword("v5nAwpMafFP6znaS4urhdWDLS5511M42", "asd")
+		keyhash, err := util.EncodePassword("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", "asd")
 		require.NoError(t, err)
 
 		bus.AddHandler("test", func(ctx context.Context, query *models.GetApiKeyByNameQuery) error {
@@ -33,7 +33,7 @@ func TestMiddlewareBasicAuth(t *testing.T) {
 			return nil
 		})
 
-		authHeader := util.GetBasicAuthHeader("api_key", "eyJrIjoidjVuQXdwTWFmRlA2em5hUzR1cmhkV0RMUzU1MTFNNDIiLCJuIjoiYXNkIiwiaWQiOjF9")
+		authHeader := util.GetBasicAuthHeader("api_key", "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
 		sc.fakeReq("GET", "/").withAuthorizationHeader(authHeader).exec()
 
 		assert.Equal(t, 200, sc.resp.Code)
